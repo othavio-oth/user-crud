@@ -1,5 +1,6 @@
 package com.github.othaviooth.usercrud.service;
 
+import com.github.othaviooth.usercrud.exceptions.ObjectNotFoundException;
 import com.github.othaviooth.usercrud.model.User;
 import com.github.othaviooth.usercrud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,9 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public User findUserById(Long id){
+    public User findUserById(Long id) throws ObjectNotFoundException{
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElse(null);
+        return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
     }
 
     public List<User> gelAllUsers(){
