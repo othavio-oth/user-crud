@@ -8,9 +8,13 @@ import com.github.othaviooth.usercrud.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/users")
@@ -19,10 +23,19 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<UserReponse> createUser(UserRequired userRequired){
         User user = userService.createUser(UserMapper.fromDTO(userRequired));
         return ResponseEntity.ok(UserMapper.fromEntity(user));
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserReponse>> getAllUsers(){
+        List<User> users = userService.gelAllUsers();
+        List<UserReponse> usersDTO= users.stream().
+                map(UserMapper::fromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(usersDTO);
+    }
+
 }
+
