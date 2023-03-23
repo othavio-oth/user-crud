@@ -5,6 +5,7 @@ import com.github.othaviooth.usercrud.controller.dto.UserReponse;
 import com.github.othaviooth.usercrud.controller.dto.UserRequired;
 import com.github.othaviooth.usercrud.model.User;
 import com.github.othaviooth.usercrud.service.UserService;
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserReponse> createUser(UserRequired userRequired){
+    public ResponseEntity<UserReponse> createUser(@RequestBody @Valid UserRequired userRequired){
         User user = userService.createUser(UserMapper.fromDTO(userRequired));
         return ResponseEntity.ok(UserMapper.fromEntity(user));
     }

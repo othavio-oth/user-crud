@@ -15,10 +15,13 @@ public class User {
     private Long id;
 
     private String name;
+
     private String email;
 
+   // @NotNull
     private Integer age;
     private String password;
+
     private String description;
 
 }
