@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,9 +42,9 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<UserReponse> getUserByFilter(@RequestParam(value = "name", required = false) String name){
-        User user = userService.findUserByName(name);
-        return ResponseEntity.ok(UserMapper.fromEntity(user));
+    public ResponseEntity<List<UserReponse>> getUserByFilter(@RequestParam(value = "name", required = false) String name){
+        List<User> users = userService.findUserByName(name);
+        return ResponseEntity.ok(users.stream().map(UserMapper::fromEntity).collect(Collectors.toList()));
     }
 
     @DeleteMapping("{id}")
