@@ -6,10 +6,7 @@ import com.github.othaviooth.usercrud.controller.dto.UserRequired;
 import com.github.othaviooth.usercrud.model.User;
 import com.github.othaviooth.usercrud.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +37,12 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserReponse> getUserById(@PathVariable Long id){
         User user = userService.findUserById(id);
+        return ResponseEntity.ok(UserMapper.fromEntity(user));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<UserReponse> getUserByFilter(@RequestParam(value = "name", required = false) String name){
+        User user = userService.findUserByName(name);
         return ResponseEntity.ok(UserMapper.fromEntity(user));
     }
 

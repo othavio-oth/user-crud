@@ -18,7 +18,6 @@ public class User {
 
     private String email;
 
-   // @NotNull
     private Integer age;
     private String password;
 
