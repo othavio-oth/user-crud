@@ -28,7 +28,7 @@ public class UserService {
         return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
     }
 
-    public List<User> findUserByName(String name) throws ObjectNotFoundException{
+    public List<User> findUserByName(String name){
        return this.userRepository.findUserByNameIgnoreCase(name);
     }
 
