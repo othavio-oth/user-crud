@@ -22,10 +22,14 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    @Transactional
     public User findUserById(Long id) throws ObjectNotFoundException{
         Optional<User> user = this.userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
+    }
+
+    public User findUserByEmail(String email)throws ObjectNotFoundException{
+        Optional<User> user = userRepository.findUserByEmail(email);
+        return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
     }
 
     public List<User> findUserByName(String name){
