@@ -32,6 +32,11 @@ public class UserService {
         return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
     }
 
+    public User findUserByUsername(String username)throws ObjectNotFoundException{
+        Optional<User> user = userRepository.findUserByUsername(username);
+        return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
+    }
+
     public List<User> findUserByName(String name){
        return this.userRepository.findUserByNameIgnoreCase(name);
     }
