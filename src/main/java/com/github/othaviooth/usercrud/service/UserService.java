@@ -6,6 +6,8 @@ import com.github.othaviooth.usercrud.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User createUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
 
@@ -28,14 +32,14 @@ public class UserService {
     }
 
     public User findUserByEmail(String email)throws ObjectNotFoundException{
-        Optional<User> user = userRepository.findUserByEmail(email);
-        return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
+       User user = userRepository.findUserByEmail(email);
+        return user;
     }
 
-    public User findUserByUsername(String username)throws ObjectNotFoundException{
-        Optional<User> user = userRepository.findUserByUsername(username);
-        return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
-    }
+    // public User findUserByUsername(String username)throws ObjectNotFoundException{
+    //     Optional<User> user = userRepository.findUserByUsername(username);
+    //     return user.orElseThrow(()-> new ObjectNotFoundException("User not Found"));
+    // }
 
     public List<User> findUserByName(String name){
        return this.userRepository.findUserByNameIgnoreCase(name);
