@@ -4,6 +4,7 @@ import com.github.othaviooth.usercrud.service.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public String login(@RequestBody LoginDTO loginDto){
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
