@@ -20,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserReponse> createUser(@RequestBody @Valid UserRequired userRequired){
         User user = userService.createUser(UserMapper.fromDTO(userRequired));
         return ResponseEntity.ok(UserMapper.fromEntity(user));
